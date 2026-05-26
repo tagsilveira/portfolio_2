@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tiago Silveira – IT Support Portfolio</title>
+  <style>
+    :root {
+      --blue:    #1a4f8a;
+      --blue-lt: #2563ab;
+      --accent:  #e8f0fb;
+      --text:    #1e293b;
+      --muted:   #64748b;
+      --white:   #ffffff;
+      --bg:      #f1f5f9;
+      --card:    #ffffff;
+      --border:  #e2e8f0;
+      --radius:  10px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--blue);
+      box-shadow: 0 2px 12px rgba(0,0,0,.25);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 58px;
+    }
+    .nav-logo {
+      color: var(--white);
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      letter-spacing: .3px;
+    }
+    .nav-links { display: flex; gap: 6px; }
+    .nav-links a {
+      color: rgba(255,255,255,.85);
+      text-decoration: none;
+      font-size: .875rem;
+      padding: 6px 14px;
+      border-radius: 6px;
+      transition: background .2s, color .2s;
+    }
+    .nav-links a:hover { background: rgba(255,255,255,.15); color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-lt) 60%, #3b82c4 100%);
+      color: var(--white);
+      padding: 80px 24px 70px;
+      text-align: center;
+    }
+    .avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.2);
+      border: 4px solid rgba(255,255,255,.5);
+      margin: 0 auto 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.6rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .hero h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -.5px; }
+    .hero .title {
+      font-size: 1.1rem;
+      opacity: .85;
+      margin: 8px 0 18px;
+      font-weight: 400;
+    }
+    .hero-contacts {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 24px;
+    }
+    .hero-contacts a {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.3);
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-size: .875rem;
+      transition: background .2s;
+    }
+    .hero-contacts a:hover { background: rgba(255,255,255,.28); }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 56px 24px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    /* ── SECTION HEADING ── */
+    .section-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 24px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title .icon {
+      width: 34px; height: 34px;
+      background: var(--blue);
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: 0 1px 6px rgba(0,0,0,.06);
+    }
+
+    /* ── ABOUT ── */
+    .about-text { font-size: 1rem; color: var(--text); }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .skill-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: .875rem;
+      font-weight: 500;
+      color: var(--blue);
+      border-left: 4px solid var(--blue);
+    }
+    .skill-item .dot {
+      width: 8px; height: 8px;
+      background: var(--blue);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── EXPERIENCE ── */
+    .timeline { position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 17px;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+    .timeline-item {
+      position: relative;
+      padding-left: 50px;
+      margin-bottom: 32px;
+    }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: 8px;
+      top: 4px;
+      width: 20px; height: 20px;
+      background: var(--blue);
+      border-radius: 50%;
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--blue);
+    }
+    .timeline-header { margin-bottom: 8px; }
+    .job-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue);
+    }
+    .job-company {
+      font-size: .9rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .job-period {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--blue-lt);
+      font-size: .78rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-top: 6px;
+    }
+    .job-bullets {
+      margin-top: 10px;
+      padding-left: 18px;
+    }
+    .job-bullets li {
+      font-size: .875rem;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+
+    /* ── EDUCATION ── */
+    .edu-item {
+      display: flex;
+      gap: 18px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .edu-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .edu-icon {
+      width: 44px; height: 44px;
+      background: var(--accent);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .edu-degree { font-weight: 700; font-size: .95rem; color: var(--text); }
+    .edu-school { font-size: .875rem; color: var(--muted); margin-top: 2px; }
+    .edu-year {
+      display: inline-block;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--blue-lt);
+      margin-top: 5px;
+      background: var(--accent);
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .edu-bullets {
+      margin-top: 8px;
+      padding-left: 16px;
+    }
+    .edu-bullets li { font-size: .83rem; color: var(--muted); margin-bottom: 3px; }
+
+    /* ── LANGUAGES ── */
+    .lang-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .lang-row:last-child { border-bottom: none; }
+    .lang-name { font-weight: 700; width: 110px; }
+    .lang-bar-wrap {
+      flex: 1;
+      height: 8px;
+      background: var(--border);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .lang-bar {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--blue), var(--blue-lt));
+    }
+    .lang-level { font-size: .83rem; color: var(--muted); width: 180px; text-align: right; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--blue);
+      color: rgba(255,255,255,.75);
+      text-align: center;
+      padding: 28px 24px;
+      font-size: .85rem;
+    }
+    footer a { color: rgba(255,255,255,.9); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 720px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.8rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo">Tiago Silveira</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="avatar">TS</div>
+  <h1>Tiago de Souza Silveira</h1>
+  <p class="title">IT Support Analyst &nbsp;|&nbsp; Help Desk &nbsp;|&nbsp; Cloud &amp; Infrastructure</p>
+  <p style="opacity:.8; font-size:.95rem;">Rockdale, NSW, Australia</p>
+  <div class="hero-contacts">
+    <a href="tel:+61451140839">
+      <span>📞</span> +61 0451 140 839
+    </a>
+    <a href="mailto:tag_silveira@hotmail.com">
+      <span>✉️</span> tag_silveira@hotmail.com
+    </a>
+    <a href="https://www.linkedin.com/in/tiagodesouzasilveira/" target="_blank" rel="noopener">
+      <span>🔗</span> linkedin.com/in/tiagodesouzasilveira
+    </a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="background:#fff; border-bottom:1px solid var(--border);">
+  <div class="container" style="padding-top:48px; padding-bottom:48px;">
+    <h2 class="section-title">
+      <span class="icon" style="color:#fff;">👤</span> Professional Summary
+    </h2>
+    <div class="card about-text">
+      Dedicated IT Support professional with over <strong>five years of hands-on experience</strong> delivering
+      technical assistance, end-user support, and system maintenance across diverse business environments.
+      Skilled in hardware and software troubleshooting, network configuration, remote support, and
+      IT infrastructure management. Holds a strong foundation in <strong>cloud computing (AWS)</strong>,
+      database systems, and programming. Adept at communicating clearly with both technical and
+      non-technical users, resolving issues efficiently, and contributing to continuous operational
+      improvement. Currently completing a <strong>Bachelor of Database Technology</strong> and actively
+      pursuing career growth in IT Support, Help Desk, Desktop Support, and IT Technician roles
+      across Australia.
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <h2 class="section-title">
+      <span class="icon" style="color:#fff;">⚙️</span> Key Skills
+    </h2>
+    <div class="skills-grid">
+      <div class="skill-item"><span class="dot"></span>IT Help Desk &amp; Technical Support</div>
+      <div class="skill-item"><span class="dot"></span>Hardware &amp; Software Troubleshooting</div>
+      <div class="skill-item"><span class="dot"></span>Remote Desktop Support (RDP / TeamViewer)</div>
+      <div class="skill-item"><span class="dot"></span>Network Configuration &amp; TCP/IP</div>
+      <div class="skill-item"><span class="dot"></span>User Account Management (Active Directory)</div>
+      <div class="skill-item"><span class="dot"></span>System Installation &amp; Configuration</div>
+      <div class="skill-item"><span class="dot"></span>Incident Logging &amp; Ticketing Systems</div>
+      <div class="skill-item"><span class="dot"></span>Cloud Computing – AWS (EC2, VPC, S3)</div>
+      <div class="skill-item"><span class="dot"></span>Operating Systems: Windows &amp; Linux</div>
+      <div class="skill-item"><span class="dot"></span>Customer Service &amp; End-User Training</div>
+      <div class="skill-item"><span class="dot"></span>Database Management (SQL &amp; NoSQL)</div>
+      <div class="skill-item"><span class="dot"></span>Python, HTML, JavaScript</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="background:#fff; border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="container">
+    <h2 class="section-title">
+      <span class="icon" style="color:#fff;">💼</span> Professional Experience
+    </h2>
+    <div class="timeline">
+
+      <!-- Job 1 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-header">
+          <div class="job-title">Technical Support Analyst</div>
+          <div class="job-company">Ouro Moderno &nbsp;·&nbsp; Montenegro, RS, Brazil</div>
+          <span class="job-period">May 2020 – January 2024</span>
+        </div>
+        <ul class="job-bullets">
+          <li>Served as primary point of contact for end-user IT support, diagnosing and resolving hardware, software, and network issues promptly.</li>
+          <li>Provided remote and on-site support using remote desktop tools (RDP, TeamViewer) to resolve technical issues without requiring physical presence.</li>
+          <li>Installed, configured, and maintained workstations, printers, and peripherals to meet operational standards.</li>
+          <li>Managed user accounts and access permissions, including password resets and profile configurations in Active Directory.</li>
+          <li>Configured and troubleshot IP addresses, network connections, and wireless connectivity.</li>
+          <li>Performed routine system updates, patch management, and preventive maintenance to minimise downtime.</li>
+          <li>Collaborated with cross-functional teams to implement new technologies and improve IT workflows.</li>
+          <li>Documented technical issues, resolutions, and procedures to build a knowledge base and improve first-call resolution rates.</li>
+        </ul>
+      </div>
+
+      <!-- Job 2 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-header">
+          <div class="job-title">IT Technical Assistant</div>
+          <div class="job-company">Lugane &nbsp;·&nbsp; Porto Alegre, Brazil</div>
+          <span class="job-period">2015 – 2017</span>
+        </div>
+        <ul class="job-bullets">
+          <li>Provided hands-on technical support for IT infrastructure including desktop builds, system installations, and hardware troubleshooting.</li>
+          <li>Assisted in network setup and management, ensuring reliable connectivity across the organisation.</li>
+          <li>Supported end-users with software issues, system access, and day-to-day IT queries.</li>
+          <li>Maintained IT equipment and performed regular checks to ensure efficient system operation.</li>
+        </ul>
+      </div>
+
+      <!-- Job 3 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-header">
+          <div class="job-title">Transmitter Operator</div>
+          <div class="job-company">RBS TV &nbsp;·&nbsp; Porto Alegre, Brazil</div>
+          <span class="job-period">2014 – 2015</span>
+        </div>
+        <ul class="job-bullets">
+          <li>Monitored and maintained broadcasting and transmission equipment to ensure high-quality, uninterrupted signal output.</li>
+          <li>Conducted routine maintenance checks and swiftly resolved technical faults to minimise broadcast downtime.</li>
+          <li>Applied systematic troubleshooting procedures in a high-pressure environment, demonstrating strong attention to detail.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <h2 class="section-title">
+      <span class="icon" style="color:#fff;">🎓</span> Education
+    </h2>
+    <div class="card">
+
+      <div class="edu-item">
+        <div class="edu-icon">🏛️</div>
+        <div>
+          <div class="edu-degree">Bachelor of Database Technology <em style="font-size:.8rem; color:var(--blue-lt);">(In Progress)</em></div>
+          <div class="edu-school">UNINTER International University Centre &nbsp;·&nbsp; Brazil</div>
+          <span class="edu-year">2023 – Present</span>
+          <ul class="edu-bullets">
+            <li>Advanced Database Systems and Big Data</li>
+            <li>Cloud Computing Services (AWS, Azure)</li>
+            <li>Software Development Lifecycle</li>
+            <li>Security in Information Technology</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-icon">📋</div>
+        <div>
+          <div class="edu-degree">Technical Certificate in Information Technology</div>
+          <div class="edu-school">Alcides Maya Technical School &nbsp;·&nbsp; Porto Alegre, Brazil</div>
+          <span class="edu-year">2016 – 2018</span>
+          <ul class="edu-bullets">
+            <li>Computer Architecture and Operating Systems</li>
+            <li>Programming Logic and Web Development (HTML, JavaScript)</li>
+            <li>Database Systems and Wireless Technology</li>
+            <li>Cloud Computing and AWS Fundamentals</li>
+            <li>Networking, Project Management, and UX Design</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-icon">🌏</div>
+        <div>
+          <div class="edu-degree">General English Course</div>
+          <div class="edu-school">NCVE International Language School &nbsp;·&nbsp; Sydney, NSW</div>
+          <span class="edu-year">March 2024 – August 2024</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section style="background:#fff; border-top:1px solid var(--border);">
+  <div class="container" style="padding-top:48px; padding-bottom:48px;">
+    <div class="grid-2" style="align-items:start;">
+
+      <!-- Languages -->
+      <div>
+        <h2 class="section-title">
+          <span class="icon" style="color:#fff;">🌐</span> Languages
+        </h2>
+        <div class="card">
+          <div class="lang-row">
+            <span class="lang-name">Portuguese</span>
+            <div class="lang-bar-wrap"><div class="lang-bar" style="width:100%"></div></div>
+            <span class="lang-level">Native</span>
+          </div>
+          <div class="lang-row">
+            <span class="lang-name">English</span>
+            <div class="lang-bar-wrap"><div class="lang-bar" style="width:72%"></div></div>
+            <span class="lang-level">Professional working proficiency</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact card -->
+      <div id="contact">
+        <h2 class="section-title">
+          <span class="icon" style="color:#fff;">📬</span> Get in Touch
+        </h2>
+        <div class="card" style="display:flex; flex-direction:column; gap:14px;">
+          <a href="tel:+61451140839" style="display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--text);">
+            <span style="font-size:1.4rem;">📞</span>
+            <div>
+              <div style="font-weight:600;">Phone</div>
+              <div style="color:var(--muted); font-size:.875rem;">+61 0451 140 839</div>
+            </div>
+          </a>
+          <a href="mailto:tag_silveira@hotmail.com" style="display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--text);">
+            <span style="font-size:1.4rem;">✉️</span>
+            <div>
+              <div style="font-weight:600;">Email</div>
+              <div style="color:var(--muted); font-size:.875rem;">tag_silveira@hotmail.com</div>
+            </div>
+          </a>
+          <a href="https://linkedin.com/in/tagsilveira" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--text);">
+            <span style="font-size:1.4rem;">🔗</span>
+            <div>
+              <div style="font-weight:600;">LinkedIn</div>
+              <div style="color:var(--muted); font-size:.875rem;">linkedin.com/in/tagsilveira</div>
+            </div>
+          </a>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="font-size:1.4rem;">📍</span>
+            <div>
+              <div style="font-weight:600;">Location</div>
+              <div style="color:var(--muted); font-size:.875rem;">Rockdale, NSW, Australia</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2026 Tiago de Souza Silveira &nbsp;·&nbsp; IT Support Professional &nbsp;·&nbsp; Rockdale, NSW</p>
+  <p style="margin-top:6px; font-size:.8rem;">Built with HTML &amp; CSS</p>
+</footer>
+
+</body>
+</html>
